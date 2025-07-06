@@ -50,7 +50,7 @@ export default function App() {
         setLoading(true); // Inicia el estado de carga
         setError(null);   // Limpia errores anteriores
 
-        const response = await fetch("https://coreweb.onrender.com/pilots/ranking/all");
+        const response = await fetch("https://coreweb.onrender.com/ranking/all");
 
         if (!response.ok) {
           // Si la respuesta no es 2xx, lanza un error
@@ -58,7 +58,7 @@ export default function App() {
           throw new Error(errorData.message || 'Error al obtener los rankings');
         }
 
-        const data: CircuitRanking[] = await response.json();
+        const data: CircuitRanking[] = await response.json(); 
         // ¡CORRECCIÓN CLAVE AQUÍ! La 'data' es directamente el array de rankings.
         setAllRankings(data);
         console.log("Datos de rankings recibidos:", data);
