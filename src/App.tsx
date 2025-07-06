@@ -50,7 +50,7 @@ export default function App() {
         setLoading(true); // Inicia el estado de carga
         setError(null);   // Limpia errores anteriores
 
-        const response = await fetch("https://coreweb.onrender.com/ranking/all");
+        const response = await fetch("https://coreweb.onrender.com/pilots/ranking/all");
 
         if (!response.ok) {
           // Si la respuesta no es 2xx, lanza un error
