@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+//import React, { useEffect, useState } from "react";
 import "./App.css"; // Asegúrate de que este archivo CSS exista y contenga estilos para .container, .grid, .card, etc.
 
 // Define las interfaces para la estructura de datos esperada de tu API F1
