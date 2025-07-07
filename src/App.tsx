@@ -1,30 +1,29 @@
 import { useEffect, useState } from "react";
-//import { useEffect, useState } from "react";
-import "./App.css"; // Asegúrate de que este archivo CSS exista y contenga estilos para .container, .grid, .card, etc.
 
-// Define las interfaces para la estructura de datos esperada de tu API F1
+import "./App.css"; 
+
+
 interface Pilot {
-  _id: string; // ID de MongoDB
-  name: string; // Nombre del piloto
-  equipo: string; // Equipo del piloto
-  nacionalidad: string; // Nacionalidad del piloto
-  promedioPosicionFinalGeneral: number; // Promedio de posición final general
-  porcentajeAbandonoGeneral: number; // Porcentaje de abandono general
-  // generalPerfomance: number; // Ya se usa en RankingEntry, no es necesario aquí
-  // vehiculoId: string; // Ya se maneja la población, no es necesario aquí para visualización directa
+  _id: string; 
+  name: string;
+  equipo: string; 
+  nacionalidad: string; 
+  promedioPosicionFinalGeneral: number; 
+  porcentajeAbandonoGeneral: number; 
+ 
 }
 
 interface Circuit {
-  _id: string; // ID de MongoDB
-  name: string; // Nombre del circuito
-  ubication: string; // Ubicación del circuito
-  temperature: number; // Temperatura del circuito
-  tipoCircuito: string; // Tipo de circuito (urbano, tradicional, híbrido)
-  cantidadCurvas: number; // Cantidad de curvas
-  porcentajeAccidentesHistorico: number; // Porcentaje de accidentes histórico
-  longitudRectaMasLargaKm: number; // Longitud de la recta más larga en Km
-  cambioElevacionMetros: number; // Cambio de elevación en metros
-  dificultadCircuito: number; // Dificultad calculada del circuito
+  _id: string; 
+  name: string; 
+  ubication: string; 
+  temperature: number; 
+  tipoCircuito: string; 
+  cantidadCurvas: number; 
+  porcentajeAccidentesHistorico: number;
+  longitudRectaMasLargaKm: number; 
+  cambioElevacionMetros: number; 
+  dificultadCircuito: number; 
 }
 
 interface RankingEntry {
@@ -38,28 +37,27 @@ interface CircuitRanking {
 }
 
 export default function App() {
-  // Cambiamos el nombre de 'characters' a 'allRankings' para que sea más descriptivo
-  // y su tipo a 'CircuitRanking[]' para que coincida con la respuesta de la API.
+
   const [allRankings, setAllRankings] = useState<CircuitRanking[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null); // Añadimos estado para errores
+  const [error, setError] = useState<string | null>(null); 
 
   useEffect(() => {
     const fetchAllRankings = async () => {
       try {
-        setLoading(true); // Inicia el estado de carga
-        setError(null);   // Limpia errores anteriores
+        setLoading(true); 
+        setError(null);   
 
         const response = await fetch("https://coreweb.onrender.com/pilots/ranking/all");
 
         if (!response.ok) {
-          // Si la respuesta no es 2xx, lanza un error
+
           const errorData = await response.json();
           throw new Error(errorData.message || 'Error al obtener los rankings');
         }
 
         const data: CircuitRanking[] = await response.json(); 
-        // ¡CORRECCIÓN CLAVE AQUÍ! La 'data' es directamente el array de rankings.
+        
         setAllRankings(data);
         console.log("Datos de rankings recibidos:", data);
 
@@ -67,7 +65,7 @@ export default function App() {
         console.error("Error al cargar rankings:", err);
         setError(err.message || "Ocurrió un error desconocido al cargar los rankings.");
       } finally {
-        setLoading(false); // Finaliza el estado de carga
+        setLoading(false); 
       }
     };
 
@@ -93,7 +91,6 @@ export default function App() {
       {/* Mapeamos sobre cada objeto de circuito con su ranking */}
       {allRankings.map((circuitData) => (
         <div key={circuitData.circuit._id} className="circuit-card">
-          {/* Información detallada del Circuito */}
           <h2 className="circuit-name">{circuitData.circuit.name}</h2>
           <p className="circuit-detail">Ubicación: <span className="font-medium">{circuitData.circuit.ubication}</span></p>
           <p className="circuit-detail">Temperatura: <span className="font-medium">{circuitData.circuit.temperature}°C</span></p>
